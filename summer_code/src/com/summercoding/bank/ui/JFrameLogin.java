@@ -6,6 +6,7 @@ package com.summercoding.bank.ui;
 
 import com.summercoding.bank.controlleur.Controller;
 import com.summercoding.bank.entities.Admin;
+import com.summercoding.bank.entities.Utilisateur;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Edika Edmond Junior
  */
-public class JFrameLoginAdmin extends javax.swing.JFrame {
+public class JFrameLogin extends javax.swing.JFrame {
 
     //Creation de l'objet controleur
     Controller controller = new Controller();
@@ -23,7 +24,7 @@ public class JFrameLoginAdmin extends javax.swing.JFrame {
     /**
      * Creates new form JFrameLoginAdmin
      */
-    public JFrameLoginAdmin() {
+    public JFrameLogin() {
         initComponents();
     }
 
@@ -43,6 +44,8 @@ public class JFrameLoginAdmin extends javax.swing.JFrame {
         boutonAnnuler = new javax.swing.JButton();
         boutonOk = new javax.swing.JButton();
         champPassword = new javax.swing.JPasswordField();
+        comboBoxStatus = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +67,10 @@ public class JFrameLoginAdmin extends javax.swing.JFrame {
             }
         });
 
+        comboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "user" }));
+
+        jLabel3.setText("Status");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -72,16 +79,18 @@ public class JFrameLoginAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(comboBoxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(champLogin)
+                    .addComponent(champPassword)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(boutonAnnuler)
                         .addGap(18, 18, 18)
-                        .addComponent(boutonOk, javax.swing.GroupLayout.PREFERRED_SIZE, 63, Short.MAX_VALUE))
-                    .addComponent(champLogin)
-                    .addComponent(champPassword))
-                .addContainerGap(36, Short.MAX_VALUE))
+                        .addComponent(boutonOk, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,11 +103,15 @@ public class JFrameLoginAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(champPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boutonAnnuler)
                     .addComponent(boutonOk))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,23 +132,36 @@ public class JFrameLoginAdmin extends javax.swing.JFrame {
         try{
             String login = champLogin.getText();
             String password = champPassword.getText();
+            String status = comboBoxStatus.getSelectedItem().toString();
             
             if(login.equals("") || password.equals("")){
                 JOptionPane.showMessageDialog(null,"Veuillez completerer les informations manquantes");
             }
             else{
-                Admin admin = controller.routeVersLoginAdmin(login, password);
+                if(status.equals("admin")){ ///Cas d'un admin
+                    Admin admin = controller.routeVersLoginAdmin(login, password);
 
-                if(admin == null){
-                    JOptionPane.showMessageDialog(null, "Login or Password incorrect");
+                    if(admin == null){
+                        JOptionPane.showMessageDialog(null, "Login or Password incorrect");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Successfull");
+                    }
                 }
-                else{
-                    JOptionPane.showMessageDialog(null, "Successfull");
+                else{ //Cas d'un utilisateur
+                    Utilisateur utilisateur = controller.routeVersLoginUtilisateur(login, password);
+
+                    if(utilisateur == null){
+                        JOptionPane.showMessageDialog(null, "Login or Password incorrect");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Successfull");
+                    }
                 }
             }
   
         }catch (SQLException ex){
-            Logger.getLogger(JFrameLoginAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JFrameLogin.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Veuillez réessayer plus tard");
         }
     }//GEN-LAST:event_boutonOkActionPerformed
@@ -161,20 +187,21 @@ public class JFrameLoginAdmin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrameLoginAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrameLoginAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrameLoginAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrameLoginAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrameLoginAdmin().setVisible(true);
+                new JFrameLogin().setVisible(true);
             }
         });
     }
@@ -184,8 +211,10 @@ public class JFrameLoginAdmin extends javax.swing.JFrame {
     private javax.swing.JButton boutonOk;
     private javax.swing.JTextField champLogin;
     private javax.swing.JPasswordField champPassword;
+    private javax.swing.JComboBox<String> comboBoxStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
