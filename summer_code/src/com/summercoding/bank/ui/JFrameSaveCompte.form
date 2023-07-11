@@ -49,8 +49,8 @@
                           </Group>
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="champSolde" pref="189" max="32767" attributes="0"/>
-                              <Component id="comboBoxUser" max="32767" attributes="0"/>
+                              <Component id="champSolde" max="32767" attributes="0"/>
+                              <Component id="comboBoxUser" alignment="0" pref="215" max="32767" attributes="0"/>
                               <Component id="comboBoxAdmin" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -61,7 +61,7 @@
                           <Component id="boutonOk" min="-2" pref="47" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="60" max="32767" attributes="0"/>
+                  <EmptySpace pref="34" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -88,7 +88,7 @@
                       <Component id="boutonAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="boutonOk" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="87" max="32767" attributes="0"/>
+                  <EmptySpace pref="61" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

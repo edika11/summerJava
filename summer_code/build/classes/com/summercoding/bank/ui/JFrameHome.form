@@ -9,21 +9,22 @@
             <Property name="text" type="java.lang.String" value="Admin"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="menuCreateAdmin">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCreerAdmin">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Create"/>
+                <Property name="text" type="java.lang.String" value="Cr&#xe9;er"/>
               </Properties>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="menuUpdateAdmin">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCreerAdminActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemListerAdmin">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Update"/>
+                <Property name="text" type="java.lang.String" value="Lister"/>
               </Properties>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="menuDeleteAdmin">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Delete"/>
-              </Properties>
-            </Menu>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemListerAdminActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
@@ -31,21 +32,22 @@
             <Property name="text" type="java.lang.String" value="User"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="menuCreateUser">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCreeruser">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Create"/>
+                <Property name="text" type="java.lang.String" value="Cr&#xe9;er"/>
               </Properties>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="menuUpdateUser">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCreeruserActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemListerUser">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Update"/>
+                <Property name="text" type="java.lang.String" value="Lister"/>
               </Properties>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="menuDeleteUser">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Delete"/>
-              </Properties>
-            </Menu>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemListerUserActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu9">
@@ -53,22 +55,33 @@
             <Property name="text" type="java.lang.String" value="Compte"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="menuCreateCompte">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCreerCompte">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Create"/>
+                <Property name="text" type="java.lang.String" value="Cr&#xe9;er"/>
               </Properties>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="menuUpdateCompte">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCreerCompteActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemListerCompte">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Update"/>
+                <Property name="text" type="java.lang.String" value="Lister"/>
               </Properties>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="menuDeleteCompte">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Delete"/>
-              </Properties>
-            </Menu>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemListerCompteActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="A propos"/>
+          </Properties>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Aide"/>
+          </Properties>
         </Menu>
       </SubComponents>
     </Menu>
@@ -111,15 +124,42 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" alignment="0" pref="748" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="277" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="tableListAdminOrUserOrCompte">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="0" rowCount="0"/>
+                </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                  <TableColumnModel selectionModel="0"/>
+                </Property>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                </Property>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
     </Container>
   </SubComponents>
 </Form>

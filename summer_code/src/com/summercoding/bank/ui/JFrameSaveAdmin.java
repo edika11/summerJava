@@ -53,12 +53,6 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
 
         jLabel3.setText("Nom");
 
-        champLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                champLoginActionPerformed(evt);
-            }
-        });
-
         boutonAnnuler.setText("Annuler");
         boutonAnnuler.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,11 +71,14 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(233, Short.MAX_VALUE)
+                .addComponent(boutonOk, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(22, 22, 22)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -89,19 +86,20 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
                                 .addComponent(jLabel2))
                             .addGap(23, 23, 23)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(champLogin)
-                                .addComponent(champNom, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                                .addComponent(champPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(champLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                                .addComponent(champPassword)
+                                .addComponent(champNom)))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(102, 102, 102)
-                            .addComponent(boutonAnnuler)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                            .addComponent(boutonOk, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(22, Short.MAX_VALUE)))
+                            .addComponent(boutonAnnuler)))
+                    .addContainerGap(36, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 349, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(171, Short.MAX_VALUE)
+                .addComponent(boutonOk)
+                .addGap(71, 71, 71))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -117,10 +115,8 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addComponent(champNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(42, 42, 42)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(boutonAnnuler)
-                        .addComponent(boutonOk))
-                    .addContainerGap(263, Short.MAX_VALUE)))
+                    .addComponent(boutonAnnuler)
+                    .addContainerGap(70, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,15 +127,11 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void champLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_champLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_champLoginActionPerformed
 
     private void boutonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonOkActionPerformed
 

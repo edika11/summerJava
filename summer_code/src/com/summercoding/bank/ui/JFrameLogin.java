@@ -21,6 +21,9 @@ public class JFrameLogin extends javax.swing.JFrame {
     //Creation de l'objet controleur
     Controller controller = new Controller();
     
+    //Creation d'un objet JFrameHome pour l'interface Home
+    JFrameHome homePage = new JFrameHome();
+    
     /**
      * Creates new form JFrameLoginAdmin
      */
@@ -145,7 +148,9 @@ public class JFrameLogin extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Login or Password incorrect");
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Successfull");
+                        //JOptionPane.showMessageDialog(null, "Successfull");
+                        this.setVisible(false);
+                        homePage.setVisible(true);
                     }
                 }
                 else{ //Cas d'un utilisateur
@@ -155,10 +160,15 @@ public class JFrameLogin extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Login or Password incorrect");
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Successfull");
+                        //JOptionPane.showMessageDialog(null, "Successfull");
+                        this.setVisible(false);
+                        homePage.setVisible(true);
                     }
                 }
             }
+            
+            champLogin.setText("");
+            champPassword.setText("");
   
         }catch (SQLException ex){
             Logger.getLogger(JFrameLogin.class.getName()).log(Level.SEVERE, null, ex);
