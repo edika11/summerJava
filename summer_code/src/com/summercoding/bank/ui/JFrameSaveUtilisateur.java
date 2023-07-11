@@ -64,6 +64,7 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
                     champIdUser.setText(utilisateur.getIdUser()+"");
                     
                     if(utilisateur.getGenre().equals("Masculin")){
+                        radioButtonFeminin.setSelected(false);
                         radioButtonMasculin.setSelected(true);
                     }
                     
