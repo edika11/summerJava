@@ -28,6 +28,14 @@ public class GestionnaireUtilisateur {
         utilisateur.save(login, password, nom, prenom, dateNaissance, genre, idAdmin);
     }
     
+    public void updateUtilisateur(int idUser, String login, String password, String nom, String prenom, LocalDate dateNaissance, String genre, int idAdmin) throws SQLException{
+        utilisateur.update(idUser, login, password, nom, prenom, dateNaissance, genre, idAdmin);
+    }
+    
+    public void deleteUtilisateur(int idUser) throws SQLException{
+        utilisateur.delete(idUser);
+    }
+    
     public List<Utilisateur> listAllUtilisateur() throws SQLException{
         return utilisateur.getAllUser();
     }

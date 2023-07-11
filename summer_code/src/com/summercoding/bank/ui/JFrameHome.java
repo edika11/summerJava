@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -24,13 +26,15 @@ public class JFrameHome extends javax.swing.JFrame {
     Controller controller = new Controller();
     
     //Interface saveAdmin
-    JFrameSaveAdmin saveAdminPage = new JFrameSaveAdmin();
+    //JFrameSaveAdmin saveAdminPage = new JFrameSaveAdmin();
     
     //Interface saveUtilisateur
-    JFrameSaveUtilisateur saveUtilisateurPage = new JFrameSaveUtilisateur();
+    //JFrameSaveUtilisateur saveUtilisateurPage = new JFrameSaveUtilisateur();
     
     //Interface saveCompte
     JFrameSaveCompte saveComptePage = new JFrameSaveCompte();
+    
+    String quelMenu;
     
     /**
      * Creates new form JFrameHome
@@ -50,7 +54,7 @@ public class JFrameHome extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableListAdminOrUserOrCompte = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemCreerAdmin = new javax.swing.JMenuItem();
@@ -66,7 +70,7 @@ public class JFrameHome extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tableListAdminOrUserOrCompte.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -74,7 +78,12 @@ public class JFrameHome extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tableListAdminOrUserOrCompte);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,10 +181,12 @@ public class JFrameHome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemCreerAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreerAdminActionPerformed
-        saveAdminPage.setVisible(true);
+        new JFrameSaveAdmin("Add",0,this).setVisible(true);
     }//GEN-LAST:event_menuItemCreerAdminActionPerformed
 
     private void menuItemListerAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListerAdminActionPerformed
+        quelMenu = "Admin";
+        
         try {
             List<Admin> listAdmin = controller.routeVerslistAllAdmin();
             
@@ -188,17 +199,19 @@ public class JFrameHome extends javax.swing.JFrame {
                 model.addRow(new String[]{admin.getIdAdmin()+"", admin.getNom(), admin.getLogin()});
             }
             
-            tableListAdminOrUserOrCompte.setModel(model);
+            table.setModel(model);
         } catch (SQLException ex) {
             Logger.getLogger(JFrameHome.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuItemListerAdminActionPerformed
 
     private void menuItemCreeruserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreeruserActionPerformed
-        saveUtilisateurPage.setVisible(true);
+        new JFrameSaveUtilisateur("Add",0,this).setVisible(true);
     }//GEN-LAST:event_menuItemCreeruserActionPerformed
 
     private void menuItemListerUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListerUserActionPerformed
+        quelMenu = "Utilisateur";
+        
         try {
             List<Utilisateur> listUtilisateur = controller.routeVersAllUtilisateur();
             
@@ -216,7 +229,7 @@ public class JFrameHome extends javax.swing.JFrame {
                 model.addRow(new String[]{utilisateur.getIdUser()+"", utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getDateNaissance().toString(),utilisateur.getGenre(), utilisateur.getLogin(), utilisateur.getPassword(), utilisateur.getIdAdmin()+""});
             }
             
-            tableListAdminOrUserOrCompte.setModel(model);
+            table.setModel(model);
         } catch (SQLException ex) {
             Logger.getLogger(JFrameHome.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -241,11 +254,35 @@ public class JFrameHome extends javax.swing.JFrame {
                 model.addRow(new String[]{compte.getIdCompte()+"", compte.getIdUser()+"", compte.getIdAdmin()+"", compte.getSolde()+""});
             }
             
-            tableListAdminOrUserOrCompte.setModel(model);
+            table.setModel(model);
         } catch (SQLException ex) {
             Logger.getLogger(JFrameHome.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuItemListerCompteActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        int numeroLigne = table.getSelectedRow();
+        TableModel model = table.getModel();
+        
+        //Cas ou c'est un admin qui est selectionné
+        if(quelMenu.equals("Admin")){
+            String idAdminString = model.getValueAt(numeroLigne,0).toString();
+            int idAdmin = Integer.parseInt(idAdminString);
+            
+            JFrameSaveAdmin JFrameSaveAdmin = new JFrameSaveAdmin("Update", idAdmin, this);
+            JFrameSaveAdmin.setVisible(true);
+        }
+        else{
+            //Cas ou c'est un utilisateur qui est selectionné
+            if(quelMenu.equals("Utilisateur")){
+                String idUserString = model.getValueAt(numeroLigne, 0).toString();
+                int idUser = Integer.parseInt(idUserString);
+                
+                JFrameSaveUtilisateur JFrameSaveUtilisateur = new JFrameSaveUtilisateur("Update", idUser, this);
+                JFrameSaveUtilisateur.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -281,6 +318,16 @@ public class JFrameHome extends javax.swing.JFrame {
             }
         });
     }
+    
+    //getter et setter du JTable de ce JFrame
+    public JTable getTable(){
+        return table;
+    }
+    
+    public void setTable(JTable table){
+        this.table = table;
+    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
@@ -297,6 +344,6 @@ public class JFrameHome extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemListerAdmin;
     private javax.swing.JMenuItem menuItemListerCompte;
     private javax.swing.JMenuItem menuItemListerUser;
-    private javax.swing.JTable tableListAdminOrUserOrCompte;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

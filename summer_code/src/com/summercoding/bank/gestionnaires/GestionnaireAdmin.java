@@ -25,6 +25,16 @@ public class GestionnaireAdmin {
         admin.save(login, password, nom);
     }
     
+    //Update un admin
+    public void upadteAdmin(int idAdmin, String login, String password, String nom) throws SQLException{
+        admin.update(idAdmin, login, password, nom);
+    }
+    
+    //Supprimer un admin
+    public void deleteAdmin(int idAdmin) throws SQLException{
+        admin.delete(idAdmin);
+    }
+    
     //Retourner la liste de tous les admin
     public List<Admin> listAllAdmin() throws SQLException{
         return admin.getAllAdmin();

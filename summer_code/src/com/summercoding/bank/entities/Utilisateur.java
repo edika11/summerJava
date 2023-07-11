@@ -127,18 +127,20 @@ public class Utilisateur {
     }
     
     //Methode pour mettre à jour un utilisateur
-    public void update(int idUser, String login, String password, String nom, String prenom, LocalDate dateNaissance, int idAdmin) throws SQLException{
-        String command = "UPDATE utilisateur SET login = ?, password = ?, nom = ?, prenom = ?, dateNaissance = ?, idAdmin = ? WHERE utilisateur.idUser = ?;";
+    public void update(int idUser, String login, String password, String nom, String prenom, LocalDate dateNaissance, String genre, int idAdmin) throws SQLException{
+        String command = "UPDATE utilisateur SET idUser = ?, login = ?, password = ?, nom = ?, prenom = ?, dateNaissance = ?, genre = ?, idAdmin = ? WHERE utilisateur.idUser = ?;";
         
         PreparedStatement addstmt = JDBC.getConnexion().prepareStatement(command);
         
-        addstmt.setObject(1, login);
-        addstmt.setObject(2, password);
-        addstmt.setObject(3, nom);
-        addstmt.setObject(4, prenom);
-        addstmt.setObject(5, dateNaissance);
-        addstmt.setObject(6, idAdmin);
-        addstmt.setObject(7, idUser);
+        addstmt.setObject(1, idUser);
+        addstmt.setObject(2, login);
+        addstmt.setObject(3, password);
+        addstmt.setObject(4, nom);
+        addstmt.setObject(5, prenom);
+        addstmt.setObject(6, dateNaissance);
+        addstmt.setObject(7, genre);
+        addstmt.setObject(8,idAdmin);
+        addstmt.setObject(9,idUser);
         addstmt.execute();
     }
     

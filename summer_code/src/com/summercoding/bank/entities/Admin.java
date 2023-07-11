@@ -98,7 +98,7 @@ public class Admin {
     }
     
     //Methode pour supprimer un admministrateur
-    public void delete(int admin) throws SQLException{
+    public void delete(int idAdmin) throws SQLException{
         String command = "DELETE FROM admin WHERE admin.idAdmin = ?;";
         
         PreparedStatement addstmt = JDBC.getConnexion().prepareStatement(command);

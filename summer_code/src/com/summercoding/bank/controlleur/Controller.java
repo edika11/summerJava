@@ -34,6 +34,14 @@ public class Controller {
         gestionnaireAdmin.saveAdmin(login, password, nom);
     }
     
+    public void routeVersUpdateAdmin(int idAdmin, String login, String password, String nom) throws SQLException{
+        gestionnaireAdmin.upadteAdmin(idAdmin, login, password, nom);
+    }
+    
+    public void routeVersDeleteAdmin(int idAdmin) throws SQLException{
+        gestionnaireAdmin.deleteAdmin(idAdmin);
+    }
+    
     public List<Admin> routeVerslistAllAdmin() throws SQLException{
         return gestionnaireAdmin.listAllAdmin();
     }
@@ -52,6 +60,14 @@ public class Controller {
     
     public void routeVersSaveUtilisateur(String login, String password, String nom, String prenom, LocalDate dateNaissance, String genre, int idAdmin) throws SQLException{
         gestionnaireUtilisateur.saveUtilisateur(login, password, nom, prenom, dateNaissance, genre, idAdmin);
+    }
+    
+    public void routeVersUpdateUtilisateur(int idUser, String login, String password, String nom, String prenom, LocalDate dateNaissance, String genre, int idAdmin) throws SQLException{
+        gestionnaireUtilisateur.updateUtilisateur(idUser, login, password, nom, prenom, dateNaissance, genre, idAdmin);
+    }
+    
+    public void routeVersDeleteUtilisateur(int idUser) throws SQLException{
+        gestionnaireUtilisateur.deleteUtilisateur(idUser);
     }
     
     public List<Utilisateur> routeVersAllUtilisateur() throws SQLException{
