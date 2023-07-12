@@ -82,7 +82,19 @@ public class Controller {
         gestionnaireCompte.saveCompte(solde, idUser, idAdmin);
     }
     
+    public void routeVersUpdateCompte(int idCompte, double solde, int idUser, int idAdmin) throws SQLException{
+        gestionnaireCompte.updateCompte(idCompte, solde, idUser, idAdmin);
+    }
+    
+    public void routeVersDeleteCompte(int idCompte) throws SQLException{
+        gestionnaireCompte.deleteCompte(idCompte);
+    }
+    
     public List<Compte> routeVersAllCompte() throws SQLException{
         return gestionnaireCompte.listAllCompte();
+    }
+    
+    public Compte routeVersGetCompteByIdCompte(int idCompte) throws SQLException{
+        return gestionnaireCompte.getCompteByIdCompte(idCompte);
     }
 }

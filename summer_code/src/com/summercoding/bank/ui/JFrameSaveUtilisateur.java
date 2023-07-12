@@ -45,7 +45,7 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
         homePage = hp;
         
         if(quelleAction.equals("Add")){ //Cas de l'action Add
-            //On efface le champ Idadmin et son label ainsi les boutons update et delete
+            //On efface le champ IdUser et son label ainsi les boutons update et delete
             buttonDelete.setVisible(false);
             buttonUpdate.setVisible(false);
             champIdUser.setVisible(false);

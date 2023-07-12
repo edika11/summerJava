@@ -39,29 +39,34 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="boutonCancel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="boutonDelete" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="33" max="32767" attributes="0"/>
+                          <Component id="boutonUpdate" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                          <Component id="boutonAdd" min="-2" pref="53" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel1" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                               <Component id="jLabel2" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelIdCompte" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="champSolde" max="32767" attributes="0"/>
-                              <Component id="comboBoxUser" alignment="0" pref="215" max="32767" attributes="0"/>
+                              <Component id="comboBoxUser" alignment="0" pref="284" max="32767" attributes="0"/>
                               <Component id="comboBoxAdmin" alignment="0" max="32767" attributes="0"/>
+                              <Component id="champIdCompte" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
-                          <Component id="boutonAnnuler" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="boutonOk" min="-2" pref="47" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace pref="34" max="32767" attributes="0"/>
+                  <EmptySpace pref="39" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -83,12 +88,19 @@
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="comboBoxAdmin" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="boutonAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="boutonOk" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelIdCompte" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="champIdCompte" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="61" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="boutonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="boutonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="boutonUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="boutonAdd" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="29" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -111,20 +123,20 @@
         </Component>
         <Component class="javax.swing.JTextField" name="champSolde">
         </Component>
-        <Component class="javax.swing.JButton" name="boutonAnnuler">
+        <Component class="javax.swing.JButton" name="boutonCancel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Annuler"/>
+            <Property name="text" type="java.lang.String" value="Cancel"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonAnnulerActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonCancelActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="boutonOk">
+        <Component class="javax.swing.JButton" name="boutonAdd">
           <Properties>
-            <Property name="text" type="java.lang.String" value="OK"/>
+            <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonOkActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonAddActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboBoxUser">
@@ -149,6 +161,29 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="boutonDelete">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Delete"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonDeleteActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="boutonUpdate">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Update"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonUpdateActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelIdCompte">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="idCompte"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="champIdCompte">
         </Component>
       </SubComponents>
     </Container>

@@ -32,7 +32,7 @@ public class JFrameHome extends javax.swing.JFrame {
     //JFrameSaveUtilisateur saveUtilisateurPage = new JFrameSaveUtilisateur();
     
     //Interface saveCompte
-    JFrameSaveCompte saveComptePage = new JFrameSaveCompte();
+    //JFrameSaveCompte saveComptePage = new JFrameSaveCompte();
     
     String quelMenu;
     
@@ -236,10 +236,12 @@ public class JFrameHome extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListerUserActionPerformed
 
     private void menuItemCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreerCompteActionPerformed
-        saveComptePage.setVisible(true);
+        new JFrameSaveCompte("Add", 0, this).setVisible(true);
     }//GEN-LAST:event_menuItemCreerCompteActionPerformed
 
     private void menuItemListerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListerCompteActionPerformed
+        quelMenu = "Compte";
+        
         try {
             List<Compte> listCompte = controller.routeVersAllCompte();
             
@@ -280,6 +282,15 @@ public class JFrameHome extends javax.swing.JFrame {
                 
                 JFrameSaveUtilisateur JFrameSaveUtilisateur = new JFrameSaveUtilisateur("Update", idUser, this);
                 JFrameSaveUtilisateur.setVisible(true);
+            }
+            else{ 
+                if(quelMenu.equals("Compte")){ //Cas ou c'est un compte qui est selectionné
+                    String idCompteString = model.getValueAt(numeroLigne, 0).toString();
+                    int idCompte = Integer.parseInt(idCompteString);
+                    
+                    JFrameSaveCompte JFrameSaveCompte = new JFrameSaveCompte("Update", idCompte, this);
+                    JFrameSaveCompte.setVisible(true);
+                }
             }
         }
     }//GEN-LAST:event_tableMouseClicked

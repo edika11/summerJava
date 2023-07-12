@@ -19,8 +19,20 @@ public class GestionnaireCompte {
         compte.save(solde, idUser, idAdmin);
     }
     
+    public void updateCompte(int idCompte, double solde, int idUser, int idAdmin) throws SQLException{
+        compte.update(idCompte, solde, idUser, idAdmin);
+    }
+    
+    public void deleteCompte(int idCompte) throws SQLException{
+        compte.delete(idCompte);
+    }
+    
     //Retourner la liste de tous les comptes
     public List<Compte> listAllCompte() throws SQLException{
         return compte.getAllCompte();
+    }
+    
+    public Compte getCompteByIdCompte(int idCompte) throws SQLException{
+        return compte.getOne(idCompte);
     }
 }
