@@ -44,7 +44,7 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
         quelleAction = action;
         homePage = hp;
         
-        if(quelleAction.equals("Add")){ //Cas de l'action Add
+        if(quelleAction.equalsIgnoreCase("Add")){ //Cas de l'action Add
             //On efface le champ IdUser et son label ainsi les boutons update et delete
             buttonDelete.setVisible(false);
             buttonUpdate.setVisible(false);
@@ -52,7 +52,8 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
             labelIdUser.setVisible(false);
         }
         else{
-            if(quelleAction.equals("Update")){ //Cas de l'action update
+            if(quelleAction.equalsIgnoreCase("Update")){ //Cas de l'action update
+                buttonAdd.setVisible(false);
                 try {
                     //On va remplir les differents champs avec les parametres actuels pour visualisation avant modification
                     Utilisateur utilisateur = controller.routeVersGetUtilisateurByIdUser(idUser);
@@ -141,8 +142,8 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        boutonCancel = new javax.swing.JButton();
-        boutonAdd = new javax.swing.JButton();
+        buttonCancel = new javax.swing.JButton();
+        buttonAdd = new javax.swing.JButton();
         comboBoxAnnee = new javax.swing.JComboBox<>();
         comboBoxMois = new javax.swing.JComboBox<>();
         comboBoxJour = new javax.swing.JComboBox<>();
@@ -170,17 +171,17 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
 
         jLabel4.setText("Prénom");
 
-        boutonCancel.setText("Cancel");
-        boutonCancel.addActionListener(new java.awt.event.ActionListener() {
+        buttonCancel.setText("Cancel");
+        buttonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boutonCancelActionPerformed(evt);
+                buttonCancelActionPerformed(evt);
             }
         });
 
-        boutonAdd.setText("Add");
-        boutonAdd.addActionListener(new java.awt.event.ActionListener() {
+        buttonAdd.setText("Add");
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boutonAddActionPerformed(evt);
+                buttonAddActionPerformed(evt);
             }
         });
 
@@ -197,8 +198,18 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
         });
 
         radioButtonFeminin.setText("Féminin");
+        radioButtonFeminin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonFemininActionPerformed(evt);
+            }
+        });
 
         radioButtonMasculin.setText("Masculin");
+        radioButtonMasculin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonMasculinActionPerformed(evt);
+            }
+        });
 
         buttonDelete.setText("Delete");
         buttonDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -247,7 +258,7 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
                             .addComponent(champLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(boutonCancel)
+                            .addComponent(buttonCancel)
                             .addComponent(labelIdUser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +267,7 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
                                 .addGap(28, 28, 28)
                                 .addComponent(buttonUpdate)
                                 .addGap(34, 34, 34)
-                                .addComponent(boutonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(radioButtonFeminin, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -306,10 +317,10 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
                     .addComponent(champIdUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boutonCancel)
+                    .addComponent(buttonCancel)
                     .addComponent(buttonDelete)
                     .addComponent(buttonUpdate)
-                    .addComponent(boutonAdd))
+                    .addComponent(buttonAdd))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -329,7 +340,8 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void boutonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonAddActionPerformed
+    //Fonction du bouton add
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         
         try {
             //Creation d'un objet Calendar pour gerer les dates
@@ -361,34 +373,61 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Veuillez completer les informations manquantes");
             }
             else{
-                //Enregistrement grace au controleur
-                controller.routeVersSaveUtilisateur(login, password, nom, prenom, dateNaissance, genre, idAdmin);
+                if(controller.isEmailValid(login) == false){
+                    JOptionPane.showMessageDialog(null,"Votre login doit être un email valide. exemple: something@gmail.com");
+                }
+                else{
+                    if(controller.isPasswordValid(password) == false){
+                        JOptionPane.showMessageDialog(null,"Password incorrect\n" +
+                                 "- doit avoir une longueur minimale de 8 caracteres\n" +
+                                  "- doit contenir au moins une minuscule\n" +
+                                  "- doit contenir au moins une majuscule\n" +
+                                  "- doit contenir au moins un chiffre\n" +
+                                  "- doit contenir au moins un caractere special parmi !@#$%^&*");
+                    }
+                    else{
+                        //Check pour pour voir si ce login n'est pas déjà pris
+                        List<Utilisateur> listUtilisateur = controller.routeVersAllUtilisateur();
+                        for(Utilisateur utilisateur : listUtilisateur){
+                            if(utilisateur.getLogin().equals(login)){
+                                JOptionPane.showMessageDialog(null,"Login déjà pris par un utilisateur");
+                                //On sort de la fontion sans faire de sauvegarde
+                                return;
+                            }
+                        }
+
+                        //Enregistrement 
+                        controller.routeVersSaveUtilisateur(login, password, nom, prenom, dateNaissance, genre, idAdmin);
 
 
-                champLogin.setText("");
-                champPassword.setText("");
-                champNom.setText("");
-                champPrenom.setText("");
-                comboBoxAnnee.setSelectedItem(currentYear+"");
-                comboBoxMois.setSelectedItem(1+"");
-                comboBoxJour.setSelectedItem(1+"");
-                radioButtonMasculin.setSelected(false);
-                radioButtonFeminin.setSelected(true);
-                
-                this.dispose();
-                
-                refreshTable();
+                        champLogin.setText("");
+                        champPassword.setText("");
+                        champNom.setText("");
+                        champPrenom.setText("");
+                        comboBoxAnnee.setSelectedItem(currentYear+"");
+                        comboBoxMois.setSelectedItem(1+"");
+                        comboBoxJour.setSelectedItem(1+"");
+                        radioButtonMasculin.setSelected(false);
+                        radioButtonFeminin.setSelected(true);
+
+                        this.dispose();
+
+                        refreshTable();
+                    }  
+                }
             }     
         } catch (SQLException ex) {
             Logger.getLogger(JFrameSaveUtilisateur.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Veuillez réessayer plus tard");
         }
-    }//GEN-LAST:event_boutonAddActionPerformed
+    }//GEN-LAST:event_buttonAddActionPerformed
 
-    private void boutonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonCancelActionPerformed
+    //Fonction du bouton cancel
+    private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
         this.dispose();
-    }//GEN-LAST:event_boutonCancelActionPerformed
+    }//GEN-LAST:event_buttonCancelActionPerformed
 
+    //Fonction qui permet de remplir de combo box des jours selon le mois choisi
     private void comboBoxMoisItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxMoisItemStateChanged
         comboBoxJour.removeAllItems();
         //Creation d'un objet Calendar pour gerer les dates
@@ -408,6 +447,7 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboBoxMoisItemStateChanged
 
+    //Fonction qui permet de reinitialiser les combo box de mois et jours lorsqu'on change d'année
     private void comboBoxAnneeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxAnneeItemStateChanged
 
         comboBoxMois.setSelectedItem(1+"");
@@ -415,6 +455,7 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
         
     }//GEN-LAST:event_comboBoxAnneeItemStateChanged
 
+    //Fonction du bouton update
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
             String idUserString = champIdUser.getText();
             int idUser;
@@ -457,22 +498,39 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Veuillez completer les informations manquantes");
             }
             else{
-                //Update
-                controller.routeVersUpdateUtilisateur(idUser, login, password, nom, prenom, dateNaissance, genre, idAdmin);
+                if(controller.isEmailValid(login) == false){
+                   JOptionPane.showMessageDialog(null,"Votre login doit être un email valide. exemple: something@gmail.com"); 
+                }
+                else{
+                    if(controller.isPasswordValid(password) == false){
+                        JOptionPane.showMessageDialog(null,"Password incorrect\n" +
+                                 "- doit avoir une longueur minimale de 8 caracteres\n" +
+                                  "- doit contenir au moins une minuscule\n" +
+                                  "- doit contenir au moins une majuscule\n" +
+                                  "- doit contenir au moins un chiffre\n" +
+                                  "- doit contenir au moins un caractere special parmi !@#$%^&*");
+                    }
+                    else{
+                        //Update
+                        controller.routeVersUpdateUtilisateur(idUser, login, password, nom, prenom, dateNaissance, genre, idAdmin);
 
-                champLogin.setText("");
-                champPassword.setText("");
-                champNom.setText("");
-                champPrenom.setText("");
-                comboBoxAnnee.setSelectedItem(currentYear+"");
-                comboBoxMois.setSelectedItem(1+"");
-                comboBoxJour.setSelectedItem(1+"");
-                radioButtonMasculin.setSelected(false);
-                radioButtonFeminin.setSelected(true);
-                
-                this.dispose();
-                
-                refreshTable();
+                        //Reset des champs
+                        champLogin.setText("");
+                        champPassword.setText("");
+                        champNom.setText("");
+                        champPrenom.setText("");
+                        comboBoxAnnee.setSelectedItem(currentYear+"");
+                        comboBoxMois.setSelectedItem(1+"");
+                        comboBoxJour.setSelectedItem(1+"");
+                        radioButtonMasculin.setSelected(false);
+                        radioButtonFeminin.setSelected(true);
+
+                        this.dispose();
+
+                        //Mise à jour de la table qui affiche les utilisateurs
+                        refreshTable();
+                    }
+                }
             }     
         } catch (SQLException ex) {
             Logger.getLogger(JFrameSaveUtilisateur.class.getName()).log(Level.SEVERE, null, ex);
@@ -480,6 +538,7 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonUpdateActionPerformed
 
+    //Fonction du bouton delete
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         String idUserString = champIdUser.getText();
         int idUser = Integer.parseInt(idUserString);
@@ -493,6 +552,16 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
             Logger.getLogger(JFrameSaveUtilisateur.class.getName()).log(Level.SEVERE, null, ex);
         }       
     }//GEN-LAST:event_buttonDeleteActionPerformed
+
+    //Fonction qui deselectionne le bouton radio Féminin quand Masculin est selectionné
+    private void radioButtonMasculinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonMasculinActionPerformed
+        radioButtonFeminin.setSelected(false);
+    }//GEN-LAST:event_radioButtonMasculinActionPerformed
+
+    //Fonction qui deselectionne le bouton radio Masculin quand Féminin est selectionné
+    private void radioButtonFemininActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonFemininActionPerformed
+        radioButtonMasculin.setSelected(false);
+    }//GEN-LAST:event_radioButtonFemininActionPerformed
 
     /**
      * @param args the command line arguments
@@ -529,6 +598,7 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
         });
     }
     
+    //Fonction qui permet d'actualiser la table qui affiche la liste des utilisateurs dans le homePage apres chaque Add ou Update
     private void refreshTable() throws SQLException{
          List<Utilisateur> listUtilisateur = controller.routeVersAllUtilisateur();
             
@@ -546,12 +616,13 @@ public class JFrameSaveUtilisateur extends javax.swing.JFrame {
                 model.addRow(new String[]{utilisateur.getIdUser()+"", utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getDateNaissance().toString(),utilisateur.getGenre(), utilisateur.getLogin(), utilisateur.getPassword(), utilisateur.getIdAdmin()+""});
             }
             
+            homePage.setQuelMenu("Utilisateur");
             homePage.getTable().setModel(model);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton boutonAdd;
-    private javax.swing.JButton boutonCancel;
+    private javax.swing.JButton buttonAdd;
+    private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonUpdate;
     private javax.swing.JTextField champIdUser;

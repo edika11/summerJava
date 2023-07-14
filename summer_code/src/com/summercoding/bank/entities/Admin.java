@@ -144,7 +144,7 @@ public class Admin {
     
     //Methode pour recuperer tous les administrateurs de la BD
     public List<Admin> getAllAdmin() throws SQLException{
-        String command = "SELECt * FROM admin;";
+        String command = "SELECt * FROM admin ORDER BY idAdmin DESC;";
         
         PreparedStatement stmt = JDBC.getConnexion().prepareStatement(command);
         
@@ -164,7 +164,7 @@ public class Admin {
         return "Admin{ idAmdin = " + idAdmin + ", login = " + login + ", password = " + password + ", nom = " + nom; 
     }
     
-    
+    /*
     public static void main(String arg[]){
         Admin admin = new Admin();
         try{
@@ -183,6 +183,6 @@ public class Admin {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    */
     
 }

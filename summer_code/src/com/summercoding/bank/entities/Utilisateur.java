@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -187,7 +186,7 @@ public class Utilisateur {
     
     //Methode pour recuperer tous les utilisateurs de la BD
     public List<Utilisateur> getAllUser() throws SQLException{
-        String command = "SELECT * FROM utilisateur";
+        String command = "SELECT * FROM utilisateur ORDER BY idUser DESC";
         
         PreparedStatement stmt = JDBC.getConnexion().prepareStatement(command);
         ResultSet rs = stmt.executeQuery();
@@ -207,7 +206,7 @@ public class Utilisateur {
     }
     
     
-    
+    /*
     public static void main(String arg[]){
         Utilisateur utilisateur = new Utilisateur();
         try{
@@ -218,4 +217,5 @@ public class Utilisateur {
             Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    */
 }

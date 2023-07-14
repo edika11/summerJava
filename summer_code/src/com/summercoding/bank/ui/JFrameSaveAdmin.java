@@ -22,7 +22,7 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
     //Creation de l'objet controleur
     Controller controller = new Controller();
     
-    //Action necessaire pour qui initialiser ce JFrame (Add, update)
+    //Action necessaire pour qui initialiser le JFrame (Add, update)
     String quelleAction;
     
     JFrameHome homePage;
@@ -39,7 +39,7 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
         homePage = hp;
         quelleAction = action;
         
-        if(quelleAction.equals("Add")){ //Cas de l'action Add
+        if(quelleAction.equalsIgnoreCase("Add")){ //Cas de l'action Add
             //On efface le champ Idadmin et son label ainsi les boutons update et delete
             buttonDelete.setVisible(false);
             buttonUpdate.setVisible(false);
@@ -47,7 +47,8 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
             labelIdAdmin.setVisible(false);
         }
         else{
-            if(quelleAction.equals("Update")){ //Cas de l'action Update
+            if(quelleAction.equalsIgnoreCase("Update")){ //Cas de l'action Update
+                buttonAdd.setVisible(false);
                 try {
                     //On va remplir les differents champs avec les parametres actuels pour visualisation avant modification
                     Admin admin = controller.routeVersGetAdminByIdAdmin(idAdmin);
@@ -79,8 +80,8 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
         champLogin = new javax.swing.JTextField();
         champNom = new javax.swing.JTextField();
         champPassword = new javax.swing.JPasswordField();
-        boutonCancel = new javax.swing.JButton();
-        boutonAdd = new javax.swing.JButton();
+        buttonCancel = new javax.swing.JButton();
+        buttonAdd = new javax.swing.JButton();
         labelIdAdmin = new javax.swing.JLabel();
         champIdAdmin = new javax.swing.JTextField();
         buttonDelete = new javax.swing.JButton();
@@ -94,17 +95,17 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
 
         jLabel3.setText("Nom");
 
-        boutonCancel.setText("Cancel");
-        boutonCancel.addActionListener(new java.awt.event.ActionListener() {
+        buttonCancel.setText("Cancel");
+        buttonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boutonCancelActionPerformed(evt);
+                buttonCancelActionPerformed(evt);
             }
         });
 
-        boutonAdd.setText("Add");
-        boutonAdd.addActionListener(new java.awt.event.ActionListener() {
+        buttonAdd.setText("Add");
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boutonAddActionPerformed(evt);
+                buttonAddActionPerformed(evt);
             }
         });
 
@@ -144,13 +145,13 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
                             .addComponent(champNom)
                             .addComponent(champIdAdmin)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(boutonCancel)
+                        .addComponent(buttonCancel)
                         .addGap(35, 35, 35)
                         .addComponent(buttonDelete)
                         .addGap(34, 34, 34)
                         .addComponent(buttonUpdate)
                         .addGap(37, 37, 37)
-                        .addComponent(boutonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(118, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -175,8 +176,8 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonDelete)
-                    .addComponent(boutonAdd)
-                    .addComponent(boutonCancel)
+                    .addComponent(buttonAdd)
+                    .addComponent(buttonCancel)
                     .addComponent(buttonUpdate))
                 .addGap(11, 11, 11))
         );
@@ -199,7 +200,8 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void boutonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonAddActionPerformed
+    //Fonction du bouton Add
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
 
         try {
             String login = champLogin.getText();
@@ -210,28 +212,57 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Veuillez completerer les informations manquantes");
             }
             else{
-                controller.routeVersSaveAdmin(login, password, nom);
+                if(controller.isEmailValid(login) == false){
+                    JOptionPane.showMessageDialog(null,"Votre login doit être un email valide. exemple: something@gmail.com");
+                }
+                else{
+                    if(controller.isPasswordValid(password) == false){
+                        JOptionPane.showMessageDialog(null,"Password incorrect\n" +
+                                 "- doit avoir une longueur minimale de 8 caracteres\n" +
+                                  "- doit contenir au moins une minuscule\n" +
+                                  "- doit contenir au moins une majuscule\n" +
+                                  "- doit contenir au moins un chiffre\n" +
+                                  "- doit contenir au moins un caractere special parmi !@#$%^&*");
+                    }
+                    else{
+                        //Check pour pour voir si ce login n'est pas déjà pris
+                        List<Admin> listAdmin = controller.routeVerslistAllAdmin();
+                        for(Admin admin : listAdmin){
+                            if(admin.getLogin().equals(login)){
+                                JOptionPane.showMessageDialog(null,"Login déjà pris par un administrateur");
+                                //On sort de la fontion sans faire de sauvegarde
+                                return;
+                            }
+                        }
 
+                        //Sauvegarde de l'admin
+                        controller.routeVersSaveAdmin(login, password, nom);
 
-                champLogin.setText("");
-                champPassword.setText("");
-                champNom.setText("");
-                
-                this.dispose();
-                
-                refreshTable();
+                        //Reset des champs
+                        champLogin.setText("");
+                        champPassword.setText("");
+                        champNom.setText("");
+
+                        this.dispose();
+
+                        //Mise à jour de la table des admins
+                        refreshTable();
+                    }
+                } 
             }
             
         } catch (SQLException ex) {
             Logger.getLogger(JFrameSaveAdmin.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Veuillez reessayer plus tard");
         }
-    }//GEN-LAST:event_boutonAddActionPerformed
+    }//GEN-LAST:event_buttonAddActionPerformed
 
-    private void boutonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonCancelActionPerformed
+    //Fonction du bouton cancel
+    private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
         this.dispose();
-    }//GEN-LAST:event_boutonCancelActionPerformed
+    }//GEN-LAST:event_buttonCancelActionPerformed
 
+    //Fcontion du bouton update
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
         try{                                             
             String idAdminString = champIdAdmin.getText();
@@ -247,13 +278,29 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
             String login = champLogin.getText();
             String password = champPassword.getText();
             String nom = champNom.getText();
-            
-            controller.routeVersUpdateAdmin(idAdmin, login, password, nom);
-            
-            this.dispose();
-            
-            refreshTable();
-            
+             
+            if(controller.isEmailValid(login) == false){
+                JOptionPane.showMessageDialog(null,"Votre login doit être un email valide. exemple: something@gmail.com");
+            }
+            else{
+                if(controller.isPasswordValid(password) == false){
+                    JOptionPane.showMessageDialog(null,"Password incorrect\n" +
+                                 "- doit avoir une longueur minimale de 8 caracteres\n" +
+                                  "- doit contenir au moins une minuscule\n" +
+                                  "- doit contenir au moins une majuscule\n" +
+                                  "- doit contenir au moins un chiffre\n" +
+                                  "- doit contenir au moins un caractere special parmi !@#$%^&*");
+                }
+                else{
+                    //Upadte de l'admin
+                    controller.routeVersUpdateAdmin(idAdmin, login, password, nom);
+
+                    this.dispose();
+
+                    //Mise à jour de la table qui affiche les admin
+                    refreshTable();
+                }
+            }
         }catch(SQLException ex){
             Logger.getLogger(JFrameSaveAdmin.class.getName()).log(Level.SEVERE,null, ex);
             JOptionPane.showMessageDialog(null, "Veuillez reessayer plus tard");
@@ -261,6 +308,7 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_buttonUpdateActionPerformed
 
+    //Fonction du bouton delete
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         String idAdminString = champIdAdmin.getText();
         int idAdmin = Integer.parseInt(idAdminString);
@@ -268,7 +316,10 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
         try {
             //Suppression
             controller.routeVersDeleteAdmin(idAdmin);
+            
             this.dispose();
+            
+            //Mise à jour de la table qui affiche les admin
             refreshTable();
         } catch (SQLException ex) {
             Logger.getLogger(JFrameSaveAdmin.class.getName()).log(Level.SEVERE, null, ex);
@@ -323,12 +374,13 @@ public class JFrameSaveAdmin extends javax.swing.JFrame {
             model.addRow(new String[]{admin.getIdAdmin()+"", admin.getNom(), admin.getLogin()});
         }
         
+        homePage.setQuelMenu("Admin");
         homePage.getTable().setModel(model);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton boutonAdd;
-    private javax.swing.JButton boutonCancel;
+    private javax.swing.JButton buttonAdd;
+    private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonUpdate;
     private javax.swing.JTextField champIdAdmin;

@@ -15,14 +15,17 @@ import java.util.List;
 public class GestionnaireCompte {
     private Compte compte = new Compte();
     
+    //Enregister un compte
     public void saveCompte(double solde, int idUser, int idAdmin) throws SQLException{
         compte.save(solde, idUser, idAdmin);
     }
     
+    //Update d'un compte
     public void updateCompte(int idCompte, double solde, int idUser, int idAdmin) throws SQLException{
         compte.update(idCompte, solde, idUser, idAdmin);
     }
     
+    //Supprimer un compte
     public void deleteCompte(int idCompte) throws SQLException{
         compte.delete(idCompte);
     }
@@ -32,6 +35,7 @@ public class GestionnaireCompte {
         return compte.getAllCompte();
     }
     
+    //Recuperer un compte selon l'ID
     public Compte getCompteByIdCompte(int idCompte) throws SQLException{
         return compte.getOne(idCompte);
     }

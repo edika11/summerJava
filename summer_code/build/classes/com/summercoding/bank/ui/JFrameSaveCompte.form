@@ -42,13 +42,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="boutonCancel" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonCancel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="boutonDelete" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="33" max="32767" attributes="0"/>
                           <Component id="boutonUpdate" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="boutonAdd" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="buttonAdd" min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -95,10 +95,10 @@
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="boutonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="boutonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="boutonUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="boutonAdd" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonAdd" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="29" max="32767" attributes="0"/>
               </Group>
@@ -123,20 +123,20 @@
         </Component>
         <Component class="javax.swing.JTextField" name="champSolde">
         </Component>
-        <Component class="javax.swing.JButton" name="boutonCancel">
+        <Component class="javax.swing.JButton" name="buttonCancel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancel"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonCancelActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCancelActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="boutonAdd">
+        <Component class="javax.swing.JButton" name="buttonAdd">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonAddActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAddActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboBoxUser">

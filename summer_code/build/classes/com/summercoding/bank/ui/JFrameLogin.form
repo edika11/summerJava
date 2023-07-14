@@ -51,7 +51,7 @@
                       <Component id="champLogin" max="32767" attributes="0"/>
                       <Component id="champPassword" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="boutonAnnuler" min="-2" max="-2" attributes="0"/>
+                          <Component id="boutonCancel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="boutonOk" min="-2" pref="63" max="-2" attributes="0"/>
                       </Group>
@@ -80,7 +80,7 @@
                   </Group>
                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="boutonAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="boutonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="boutonOk" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
@@ -101,12 +101,12 @@
         </Component>
         <Component class="javax.swing.JTextField" name="champLogin">
         </Component>
-        <Component class="javax.swing.JButton" name="boutonAnnuler">
+        <Component class="javax.swing.JButton" name="boutonCancel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Annuler"/>
+            <Property name="text" type="java.lang.String" value="Cancel"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonAnnulerActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonCancelActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="boutonOk">

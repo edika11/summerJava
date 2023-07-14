@@ -16,26 +16,32 @@ import java.util.List;
 public class GestionnaireUtilisateur {
     private Utilisateur utilisateur = new Utilisateur();
     
+    //login de l'utilisateur
     public Utilisateur login(String login, String passsword) throws SQLException{
         return utilisateur.getByLoginAndPassword(login, passsword);
     }
     
+    //Recuperer un utilisateur selon son ID
     public Utilisateur getUtilisateurByIdUser(int idUser) throws SQLException{
         return utilisateur.getOne(idUser);
     }
     
+    //Enregister un utilisateur
     public void saveUtilisateur(String login, String password, String nom, String prenom, LocalDate dateNaissance, String genre, int idAdmin) throws SQLException{
         utilisateur.save(login, password, nom, prenom, dateNaissance, genre, idAdmin);
     }
     
+    //Update un utilisateur
     public void updateUtilisateur(int idUser, String login, String password, String nom, String prenom, LocalDate dateNaissance, String genre, int idAdmin) throws SQLException{
         utilisateur.update(idUser, login, password, nom, prenom, dateNaissance, genre, idAdmin);
     }
     
+    //Supprimer un utilisateur
     public void deleteUtilisateur(int idUser) throws SQLException{
         utilisateur.delete(idUser);
     }
     
+    //Retourner la liste de tous les utlisateurs de la BD
     public List<Utilisateur> listAllUtilisateur() throws SQLException{
         return utilisateur.getAllUser();
     }

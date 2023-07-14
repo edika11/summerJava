@@ -119,7 +119,7 @@ public class Compte {
     
     //Methode pour recuperer tous les comptes de la BD
     public List<Compte> getAllCompte() throws SQLException{
-        String command = "SELECt * FROM compte;";
+        String command = "SELECt * FROM compte ORDER BY idCompte DESC;";
         
         PreparedStatement stmt = JDBC.getConnexion().prepareStatement(command);
         
@@ -140,7 +140,7 @@ public class Compte {
     }
     
     
-    
+    /*
     public static void main(String arg[]){
         Compte compte = new Compte();
         try{
@@ -156,4 +156,5 @@ public class Compte {
             Logger.getLogger(Compte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    */
 }

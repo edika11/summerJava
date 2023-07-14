@@ -72,7 +72,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="boutonCancel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="buttonCancel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="labelIdUser" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
@@ -82,7 +82,7 @@
                                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                                   <Component id="buttonUpdate" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                  <Component id="boutonAdd" min="-2" pref="56" max="-2" attributes="0"/>
+                                  <Component id="buttonAdd" min="-2" pref="56" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="radioButtonFeminin" min="-2" pref="98" max="-2" attributes="0"/>
@@ -148,10 +148,10 @@
                   </Group>
                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="boutonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="buttonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="buttonUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="boutonAdd" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonAdd" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>
@@ -202,20 +202,20 @@
             <Property name="text" type="java.lang.String" value="Pr&#xe9;nom"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="boutonCancel">
+        <Component class="javax.swing.JButton" name="buttonCancel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancel"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonCancelActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCancelActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="boutonAdd">
+        <Component class="javax.swing.JButton" name="buttonAdd">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonAddActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAddActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboBoxAnnee">
@@ -258,11 +258,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="F&#xe9;minin"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioButtonFemininActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="radioButtonMasculin">
           <Properties>
             <Property name="text" type="java.lang.String" value="Masculin"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioButtonMasculinActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboBoxAdmin">
           <Properties>

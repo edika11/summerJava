@@ -18,10 +18,9 @@ import javax.swing.JOptionPane;
  */
 public class JFrameLogin extends javax.swing.JFrame {
 
-    //Creation de l'objet controleur
+    //controleur
     Controller controller = new Controller();
     
-    //Creation d'un objet JFrameHome pour l'interface Home
     JFrameHome homePage = new JFrameHome();
     
     /**
@@ -44,7 +43,7 @@ public class JFrameLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         champLogin = new javax.swing.JTextField();
-        boutonAnnuler = new javax.swing.JButton();
+        boutonCancel = new javax.swing.JButton();
         boutonOk = new javax.swing.JButton();
         champPassword = new javax.swing.JPasswordField();
         comboBoxStatus = new javax.swing.JComboBox<>();
@@ -56,10 +55,10 @@ public class JFrameLogin extends javax.swing.JFrame {
 
         jLabel2.setText("Password");
 
-        boutonAnnuler.setText("Annuler");
-        boutonAnnuler.addActionListener(new java.awt.event.ActionListener() {
+        boutonCancel.setText("Cancel");
+        boutonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boutonAnnulerActionPerformed(evt);
+                boutonCancelActionPerformed(evt);
             }
         });
 
@@ -90,7 +89,7 @@ public class JFrameLogin extends javax.swing.JFrame {
                     .addComponent(champLogin)
                     .addComponent(champPassword)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(boutonAnnuler)
+                        .addComponent(boutonCancel)
                         .addGap(18, 18, 18)
                         .addComponent(boutonOk, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(45, Short.MAX_VALUE))
@@ -112,7 +111,7 @@ public class JFrameLogin extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boutonAnnuler)
+                    .addComponent(boutonCancel)
                     .addComponent(boutonOk))
                 .addGap(41, 41, 41))
         );
@@ -141,32 +140,47 @@ public class JFrameLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Veuillez completerer les informations manquantes");
             }
             else{
-                if(status.equals("admin")){ ///Cas d'un admin
-                    Admin admin = controller.routeVersLoginAdmin(login, password);
-
-                    if(admin == null){
-                        JOptionPane.showMessageDialog(null, "Login or Password incorrect");
-                    }
-                    else{
-                        //JOptionPane.showMessageDialog(null, "Successfull");
-                        this.setVisible(false);
-                        homePage.setVisible(true);
-                    }
+                if(controller.isEmailValid(login) == false){ //Cas ou le login entré n'est pas un email
+                    JOptionPane.showMessageDialog(null,"Votre login doit être un email valide. exemple: something@gmail.com");
+                    return;
                 }
-                else{ //Cas d'un utilisateur
-                    Utilisateur utilisateur = controller.routeVersLoginUtilisateur(login, password);
-
-                    if(utilisateur == null){
-                        JOptionPane.showMessageDialog(null, "Login or Password incorrect");
+                else{
+                    if(controller.isPasswordValid(password) == false){
+                        JOptionPane.showMessageDialog(null,"Password incorrect\n" +
+                                 "- doit avoir une longueur minimale de 8 caracteres\n" +
+                                  "- doit contenir au moins une minuscule\n" +
+                                  "- doit contenir au moins une majuscule\n" +
+                                  "- doit contenir au moins un chiffre\n" +
+                                  "- doit contenir au moins un caractere special parmi !@#$%^&*");
                     }
                     else{
-                        //JOptionPane.showMessageDialog(null, "Successfull");
-                        this.setVisible(false);
-                        homePage.setVisible(true);
-                    }
+                        if(status.equals("admin")){ ///Cas d'un admin
+                            Admin admin = controller.routeVersLoginAdmin(login, password);
+
+                            if(admin == null){
+                                JOptionPane.showMessageDialog(null, "Login or Password incorrect");
+                            }
+                            else{
+                                this.setVisible(false);
+                                homePage.setVisible(true);
+                            }
+                        }
+                        else{ //Cas d'un utilisateur
+                            Utilisateur utilisateur = controller.routeVersLoginUtilisateur(login, password);
+
+                            if(utilisateur == null){
+                                JOptionPane.showMessageDialog(null, "Login or Password incorrect");
+                            }
+                            else{
+                                this.setVisible(false);
+                                homePage.setVisible(true);
+                            }
+                        }
+                    }  
                 }
             }
             
+            //Reset des champs
             champLogin.setText("");
             champPassword.setText("");
   
@@ -176,9 +190,9 @@ public class JFrameLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_boutonOkActionPerformed
 
-    private void boutonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonAnnulerActionPerformed
+    private void boutonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonCancelActionPerformed
         this.dispose();
-    }//GEN-LAST:event_boutonAnnulerActionPerformed
+    }//GEN-LAST:event_boutonCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,9 +229,9 @@ public class JFrameLogin extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton boutonAnnuler;
+    private javax.swing.JButton boutonCancel;
     private javax.swing.JButton boutonOk;
     private javax.swing.JTextField champLogin;
     private javax.swing.JPasswordField champPassword;

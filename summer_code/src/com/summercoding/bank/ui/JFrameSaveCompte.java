@@ -41,7 +41,7 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
         quelleAction = action;
         homePage = hp;
         
-        if(quelleAction.equals("Add")){ //Cas de l'action Add
+        if(quelleAction.equalsIgnoreCase("Add")){ //Cas de l'action Add
             //On efface le champ IdaCompte et son label ainsi les boutons update et delete
             labelIdCompte.setVisible(false);
             champIdCompte.setVisible(false);
@@ -49,7 +49,8 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
             boutonUpdate.setVisible(false);
         }
         else{
-            if(quelleAction.equals("Update")){ //Cas de l'action Update
+            if(quelleAction.equalsIgnoreCase("Update")){ //Cas de l'action Update
+                buttonAdd.setVisible(false);
                 try {
                 Compte compte = controller.routeVersGetCompteByIdCompte(idCompte);
                 
@@ -125,8 +126,8 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         champSolde = new javax.swing.JTextField();
-        boutonCancel = new javax.swing.JButton();
-        boutonAdd = new javax.swing.JButton();
+        buttonCancel = new javax.swing.JButton();
+        buttonAdd = new javax.swing.JButton();
         comboBoxUser = new javax.swing.JComboBox<>();
         comboBoxAdmin = new javax.swing.JComboBox<>();
         boutonDelete = new javax.swing.JButton();
@@ -142,17 +143,17 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
 
         jLabel3.setText("idAdmin");
 
-        boutonCancel.setText("Cancel");
-        boutonCancel.addActionListener(new java.awt.event.ActionListener() {
+        buttonCancel.setText("Cancel");
+        buttonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boutonCancelActionPerformed(evt);
+                buttonCancelActionPerformed(evt);
             }
         });
 
-        boutonAdd.setText("Add");
-        boutonAdd.addActionListener(new java.awt.event.ActionListener() {
+        buttonAdd.setText("Add");
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boutonAddActionPerformed(evt);
+                buttonAddActionPerformed(evt);
             }
         });
 
@@ -186,13 +187,13 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(boutonCancel)
+                        .addComponent(buttonCancel)
                         .addGap(31, 31, 31)
                         .addComponent(boutonDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(boutonUpdate)
                         .addGap(37, 37, 37)
-                        .addComponent(boutonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,10 +229,10 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
                     .addComponent(champIdCompte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boutonCancel)
+                    .addComponent(buttonCancel)
                     .addComponent(boutonDelete)
                     .addComponent(boutonUpdate)
-                    .addComponent(boutonAdd))
+                    .addComponent(buttonAdd))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -249,48 +250,66 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void boutonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonAddActionPerformed
+    //Fonction du bouton add
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         try{                                         
             String soldeString = champSolde.getText();
-            double solde; 
-            try{
-                solde = Double.parseDouble(soldeString);
-            }catch(NumberFormatException ex){
-                Logger.getLogger(JFrameSaveCompte.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Veuillez sasir correctement le solde");
-                return;
+            double solde = 0; 
+            
+            if(soldeString.equals("")){ //SI le champ du solde est vide
+                JOptionPane.showMessageDialog(null, "Veuillez compléter le champ du solde");
             }
-            
-            String idUserString = comboBoxUser.getSelectedItem().toString().split(" ")[0];
-            int idUser = Integer.parseInt(idUserString);
-            
-            String idAdminString = comboBoxAdmin.getSelectedItem().toString().split(" ")[0];
-            int idAdmin = Integer.parseInt(idAdminString);
-            
-            //Enregistrement
-            controller.routeVersSaveCompte(solde, idUser, idAdmin);
-           
+            else{   
+                try{
+                    solde = Double.parseDouble(soldeString);
+                }catch(NumberFormatException ex){
+                    Logger.getLogger(JFrameSaveCompte.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Veuillez sasir correctement le solde");
+                    return;
+                }
+                
+                String idUserString = comboBoxUser.getSelectedItem().toString().split(" ")[0];
+                int idUser = Integer.parseInt(idUserString);
 
-            champSolde.setText("");
-            
-            this.dispose();
-            
-            refreshTable();
-            
+                String idAdminString = comboBoxAdmin.getSelectedItem().toString().split(" ")[0];
+                int idAdmin = Integer.parseInt(idAdminString);
+
+                //Check pour savoir si ce compte existe déjà
+                List<Compte> listCompte = controller.routeVersAllCompte();
+                for(Compte compte : listCompte){
+                    if(compte.getIdUser() == idUser){
+                        JOptionPane.showMessageDialog(null, "Ce compte existe déjà");
+                        return;
+                    }
+                }
+                //Enregistrement
+                controller.routeVersSaveCompte(solde, idUser, idAdmin);
+
+                //Reset des champs
+                champSolde.setText("");
+
+                this.dispose();
+
+                //Mise à jour de la table des comptes
+                refreshTable();
+            }   
         }catch(SQLException ex){
             Logger.getLogger(JFrameSaveCompte.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Veuillez reessayer plus tard");
         }
-    }//GEN-LAST:event_boutonAddActionPerformed
+    }//GEN-LAST:event_buttonAddActionPerformed
 
-    private void boutonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonCancelActionPerformed
+    //Fonction du bouton cancel
+    private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
         this.dispose();
-    }//GEN-LAST:event_boutonCancelActionPerformed
+    }//GEN-LAST:event_buttonCancelActionPerformed
 
+    //Fcontion appelé lorsqu'on choisit un utilisateur dans le comboBox
     private void comboBoxUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxUserActionPerformed
         choixIdAdminSelonIdUser();
     }//GEN-LAST:event_comboBoxUserActionPerformed
 
+    //Fcontion du bouton update
     private void boutonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonUpdateActionPerformed
         try{                                         
             String soldeString = champSolde.getText();
@@ -316,11 +335,12 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
             //Update
             controller.routeVersUpdateCompte(idCompte, solde, idUser, idAdmin);
            
-
+            //Reset des champs
             champSolde.setText("");
             
             this.dispose();
             
+            //Mise à jour de la table qui affiche les comptes
             refreshTable();
             
         }catch(SQLException ex){
@@ -330,6 +350,7 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
     
     }//GEN-LAST:event_boutonUpdateActionPerformed
 
+    //Fonction du bouton delete
     private void boutonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonDeleteActionPerformed
         try {
             String idCompteString = champIdCompte.getText();
@@ -340,6 +361,7 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
             
             this.dispose();
             
+            //Mise à jour de la table qui affiche les comptes
             refreshTable();
         } catch (SQLException ex) {
             Logger.getLogger(JFrameSaveCompte.class.getName()).log(Level.SEVERE, null, ex);
@@ -381,6 +403,7 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
         });
     }
     
+    //Fonction qui permet d'actualiser la table qui affiche la liste des comptes dans le homePage apres chaque Add ou Update
     private void refreshTable() throws SQLException{
         List<Compte> listCompte = controller.routeVersAllCompte();
             
@@ -395,14 +418,15 @@ public class JFrameSaveCompte extends javax.swing.JFrame {
                 model.addRow(new String[]{compte.getIdCompte()+"", compte.getIdUser()+"", compte.getIdAdmin()+"", compte.getSolde()+""});
             }
             
+            homePage.setQuelMenu("Compte");
             homePage.getTable().setModel(model);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton boutonAdd;
-    private javax.swing.JButton boutonCancel;
     private javax.swing.JButton boutonDelete;
     private javax.swing.JButton boutonUpdate;
+    private javax.swing.JButton buttonAdd;
+    private javax.swing.JButton buttonCancel;
     private javax.swing.JTextField champIdCompte;
     private javax.swing.JTextField champSolde;
     private javax.swing.JComboBox<String> comboBoxAdmin;

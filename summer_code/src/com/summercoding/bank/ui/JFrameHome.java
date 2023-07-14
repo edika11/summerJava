@@ -24,16 +24,8 @@ public class JFrameHome extends javax.swing.JFrame {
 
     //Controlleur
     Controller controller = new Controller();
-    
-    //Interface saveAdmin
-    //JFrameSaveAdmin saveAdminPage = new JFrameSaveAdmin();
-    
-    //Interface saveUtilisateur
-    //JFrameSaveUtilisateur saveUtilisateurPage = new JFrameSaveUtilisateur();
-    
-    //Interface saveCompte
-    //JFrameSaveCompte saveComptePage = new JFrameSaveCompte();
-    
+
+    //Variable qui permet de savoir quelle fenetre d'informations à afficher (pour un admin, un utilisateur ou un compte)
     String quelMenu;
     
     /**
@@ -180,10 +172,12 @@ public class JFrameHome extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Fonctoin de l'option creer de l'onglet admin
     private void menuItemCreerAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreerAdminActionPerformed
         new JFrameSaveAdmin("Add",0,this).setVisible(true);
     }//GEN-LAST:event_menuItemCreerAdminActionPerformed
 
+    //Fonction de l'option lister de l'onglet admin
     private void menuItemListerAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListerAdminActionPerformed
         quelMenu = "Admin";
         
@@ -205,10 +199,12 @@ public class JFrameHome extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemListerAdminActionPerformed
 
+    //Fonction de l'option creer de l'onglet user
     private void menuItemCreeruserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreeruserActionPerformed
         new JFrameSaveUtilisateur("Add",0,this).setVisible(true);
     }//GEN-LAST:event_menuItemCreeruserActionPerformed
 
+    //Fonction de l'option lister de l'onglet user
     private void menuItemListerUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListerUserActionPerformed
         quelMenu = "Utilisateur";
         
@@ -235,10 +231,12 @@ public class JFrameHome extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemListerUserActionPerformed
 
+    //Fonction de l'option creer de l'onglet compte
     private void menuItemCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCreerCompteActionPerformed
         new JFrameSaveCompte("Add", 0, this).setVisible(true);
     }//GEN-LAST:event_menuItemCreerCompteActionPerformed
 
+    //Fonction de l'option lister de l'onglet compte
     private void menuItemListerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListerCompteActionPerformed
         quelMenu = "Compte";
         
@@ -262,6 +260,7 @@ public class JFrameHome extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemListerCompteActionPerformed
 
+    //Fonction appelée à chaque clic sur un element de la liste
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         int numeroLigne = table.getSelectedRow();
         TableModel model = table.getModel();
@@ -339,6 +338,15 @@ public class JFrameHome extends javax.swing.JFrame {
         this.table = table;
     }
    
+    //Getter et setter de quelMenu
+    public String getQuelMenu() {
+        return quelMenu;
+    }
+
+    public void setQuelMenu(String quelMenu) {
+        this.quelMenu = quelMenu;
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
