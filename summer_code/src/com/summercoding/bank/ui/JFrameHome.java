@@ -28,11 +28,48 @@ public class JFrameHome extends javax.swing.JFrame {
     //Variable qui permet de savoir quelle fenetre d'informations à afficher (pour un admin, un utilisateur ou un compte)
     String quelMenu;
     
+    //Variable qui permet d'identifier le statut de celui qui s'est connecté (admin ou utilisateur)
+    String loginStatus;
+    
+    //Utilisateur qui s'est connecté lors du login
+    Utilisateur loginUtilisateur;
+    
+    //Compte de l'utilisateur
+    Compte compteDuLoginUtilisateur;
+    
     /**
      * Creates new form JFrameHome
+     * @param status
+     * @param utilisateur
      */
-    public JFrameHome() {
+    public JFrameHome(String status, Utilisateur utilisateur) {
         initComponents();
+        
+        loginStatus = status;
+        loginUtilisateur = utilisateur;
+        
+        if(loginStatus.equalsIgnoreCase("admin")){
+            menuItemInfosDuCompte.setVisible(false); ///Rubrique destinée à un utilisateur
+        }
+        else{
+            if(loginStatus.equalsIgnoreCase("user")){
+                menuAdmin.setVisible(false);
+                menuUser.setVisible(false);
+                menuItemCreerCompte.setVisible(false);
+                menuItemListerCompte.setVisible(false);
+                
+                try {
+                    //Initialisation du compte
+                    Compte compte = new Compte();
+                    compteDuLoginUtilisateur = compte.getCompteByIdUser(loginUtilisateur.getIdUser());
+                    afficheInfoCompteClient();
+                } catch (SQLException ex) {
+                    Logger.getLogger(JFrameHome.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        }
+        
     }
 
     /**
@@ -48,17 +85,21 @@ public class JFrameHome extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuAdmin = new javax.swing.JMenu();
         menuItemCreerAdmin = new javax.swing.JMenuItem();
         menuItemListerAdmin = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuUser = new javax.swing.JMenu();
         menuItemCreeruser = new javax.swing.JMenuItem();
         menuItemListerUser = new javax.swing.JMenuItem();
-        jMenu9 = new javax.swing.JMenu();
+        menuCompte = new javax.swing.JMenu();
         menuItemCreerCompte = new javax.swing.JMenuItem();
         menuItemListerCompte = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        menuItemInfosDuCompte = new javax.swing.JMenuItem();
+        menuItemDepot = new javax.swing.JMenuItem();
+        menuItemRetrait = new javax.swing.JMenuItem();
+        menuItemVirement = new javax.swing.JMenuItem();
+        menuAPropos = new javax.swing.JMenu();
+        menuAide = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,7 +122,7 @@ public class JFrameHome extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,7 +131,7 @@ public class JFrameHome extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Admin");
+        menuAdmin.setText("Admin");
 
         menuItemCreerAdmin.setText("Créer");
         menuItemCreerAdmin.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +139,7 @@ public class JFrameHome extends javax.swing.JFrame {
                 menuItemCreerAdminActionPerformed(evt);
             }
         });
-        jMenu1.add(menuItemCreerAdmin);
+        menuAdmin.add(menuItemCreerAdmin);
 
         menuItemListerAdmin.setText("Lister");
         menuItemListerAdmin.addActionListener(new java.awt.event.ActionListener() {
@@ -106,11 +147,11 @@ public class JFrameHome extends javax.swing.JFrame {
                 menuItemListerAdminActionPerformed(evt);
             }
         });
-        jMenu1.add(menuItemListerAdmin);
+        menuAdmin.add(menuItemListerAdmin);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuAdmin);
 
-        jMenu2.setText("User");
+        menuUser.setText("User");
 
         menuItemCreeruser.setText("Créer");
         menuItemCreeruser.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +159,7 @@ public class JFrameHome extends javax.swing.JFrame {
                 menuItemCreeruserActionPerformed(evt);
             }
         });
-        jMenu2.add(menuItemCreeruser);
+        menuUser.add(menuItemCreeruser);
 
         menuItemListerUser.setText("Lister");
         menuItemListerUser.addActionListener(new java.awt.event.ActionListener() {
@@ -126,11 +167,11 @@ public class JFrameHome extends javax.swing.JFrame {
                 menuItemListerUserActionPerformed(evt);
             }
         });
-        jMenu2.add(menuItemListerUser);
+        menuUser.add(menuItemListerUser);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuUser);
 
-        jMenu9.setText("Compte");
+        menuCompte.setText("Compte");
 
         menuItemCreerCompte.setText("Créer");
         menuItemCreerCompte.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +179,7 @@ public class JFrameHome extends javax.swing.JFrame {
                 menuItemCreerCompteActionPerformed(evt);
             }
         });
-        jMenu9.add(menuItemCreerCompte);
+        menuCompte.add(menuItemCreerCompte);
 
         menuItemListerCompte.setText("Lister");
         menuItemListerCompte.addActionListener(new java.awt.event.ActionListener() {
@@ -146,15 +187,47 @@ public class JFrameHome extends javax.swing.JFrame {
                 menuItemListerCompteActionPerformed(evt);
             }
         });
-        jMenu9.add(menuItemListerCompte);
+        menuCompte.add(menuItemListerCompte);
 
-        jMenuBar1.add(jMenu9);
+        menuItemInfosDuCompte.setText("infos du compte");
+        menuItemInfosDuCompte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemInfosDuCompteActionPerformed(evt);
+            }
+        });
+        menuCompte.add(menuItemInfosDuCompte);
 
-        jMenu3.setText("A propos");
-        jMenuBar1.add(jMenu3);
+        menuItemDepot.setText("Dépôt");
+        menuItemDepot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemDepotActionPerformed(evt);
+            }
+        });
+        menuCompte.add(menuItemDepot);
 
-        jMenu4.setText("Aide");
-        jMenuBar1.add(jMenu4);
+        menuItemRetrait.setText("Retrait");
+        menuItemRetrait.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemRetraitActionPerformed(evt);
+            }
+        });
+        menuCompte.add(menuItemRetrait);
+
+        menuItemVirement.setText("Virement");
+        menuItemVirement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemVirementActionPerformed(evt);
+            }
+        });
+        menuCompte.add(menuItemVirement);
+
+        jMenuBar1.add(menuCompte);
+
+        menuAPropos.setText("A propos");
+        jMenuBar1.add(menuAPropos);
+
+        menuAide.setText("Aide");
+        jMenuBar1.add(menuAide);
 
         setJMenuBar(jMenuBar1);
 
@@ -179,6 +252,7 @@ public class JFrameHome extends javax.swing.JFrame {
 
     //Fonction de l'option lister de l'onglet admin
     private void menuItemListerAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListerAdminActionPerformed
+        
         quelMenu = "Admin";
         
         try {
@@ -262,6 +336,10 @@ public class JFrameHome extends javax.swing.JFrame {
 
     //Fonction appelée à chaque clic sur un element de la liste
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        if(loginStatus.equalsIgnoreCase("user")){
+            return; //On sort directement de la fonction
+        }
+        
         int numeroLigne = table.getSelectedRow();
         TableModel model = table.getModel();
         
@@ -294,6 +372,29 @@ public class JFrameHome extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tableMouseClicked
 
+    //Fonction de l'option infos du compte de l'onglet compte
+    private void menuItemInfosDuCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemInfosDuCompteActionPerformed
+        afficheInfoCompteClient();
+    }//GEN-LAST:event_menuItemInfosDuCompteActionPerformed
+
+    //Fonction de l'option dépôt  de l'onglet Compte
+    private void menuItemDepotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDepotActionPerformed
+        // on Appelle le JFrameActionOnCompte avec la mention depot
+        new JFrameActionOnCompte("depot", this).setVisible(true);
+    }//GEN-LAST:event_menuItemDepotActionPerformed
+
+    //Fonction de l'option retrait  de l'onglet Compte
+    private void menuItemRetraitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRetraitActionPerformed
+        // on Appelle le JFrameActionOnCompte avec la mention retrait
+        new JFrameActionOnCompte("retrait", this).setVisible(true);
+    }//GEN-LAST:event_menuItemRetraitActionPerformed
+
+    //Fonction de l'option virement  de l'onglet Compte
+    private void menuItemVirementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemVirementActionPerformed
+        // on Appelle le JFrameActionOnCompte avec la mention virement
+        new JFrameActionOnCompte("virement", this).setVisible(true);
+    }//GEN-LAST:event_menuItemVirementActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -324,9 +425,29 @@ public class JFrameHome extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrameHome().setVisible(true);
+                new JFrameHome("admin", null).setVisible(true);
             }
         });
+    }
+    
+    //Fonction qui remplit à l'ecran les informations concerant le compte du client
+    public void afficheInfoCompteClient(){
+        try {
+            Compte compte = new Compte();
+            compteDuLoginUtilisateur = compte.getCompteByIdUser(loginUtilisateur.getIdUser());
+            
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("id Compte");
+            model.addColumn("solde");
+            model.addColumn("id propriétaire");
+            model.addColumn("Propriétaire");
+            
+            model.addRow(new String[]{compteDuLoginUtilisateur.getIdCompte()+"", compteDuLoginUtilisateur.getSolde()+"", loginUtilisateur.getIdUser()+"", loginUtilisateur.getNom() + " "  + loginUtilisateur.getPrenom()});
+            
+            table.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     //getter et setter du JTable de ce JFrame
@@ -346,23 +467,46 @@ public class JFrameHome extends javax.swing.JFrame {
     public void setQuelMenu(String quelMenu) {
         this.quelMenu = quelMenu;
     }
+
+    //Getter et setter de  loginStatus
+    public String getLoginStatus() {
+        return loginStatus;
+    }
+
+    public void setLoginStatus(String loginStatus) {
+        this.loginStatus = loginStatus;
+    }
+
+    //Getter et setter de loginUtilisateur
+    public Utilisateur getLoginUtilisateur() {
+        return loginUtilisateur;
+    }
+
+    public void setLoginUtilisateur(Utilisateur loginUtilisateur) {
+        this.loginUtilisateur = loginUtilisateur;
+    }
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenu menuAPropos;
+    private javax.swing.JMenu menuAdmin;
+    private javax.swing.JMenu menuAide;
+    private javax.swing.JMenu menuCompte;
     private javax.swing.JMenuItem menuItemCreerAdmin;
     private javax.swing.JMenuItem menuItemCreerCompte;
     private javax.swing.JMenuItem menuItemCreeruser;
+    private javax.swing.JMenuItem menuItemDepot;
+    private javax.swing.JMenuItem menuItemInfosDuCompte;
     private javax.swing.JMenuItem menuItemListerAdmin;
     private javax.swing.JMenuItem menuItemListerCompte;
     private javax.swing.JMenuItem menuItemListerUser;
+    private javax.swing.JMenuItem menuItemRetrait;
+    private javax.swing.JMenuItem menuItemVirement;
+    private javax.swing.JMenu menuUser;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

@@ -117,6 +117,21 @@ public class Compte {
         
     }
     
+    public Compte getCompteByIdUser(int idUser) throws SQLException{
+        String command = "SELECT * FROM compte WHERE compte.idUser = ?; ";
+        
+        PreparedStatement stmt = JDBC.getConnexion().prepareStatement(command);
+        stmt.setObject(1,idUser);
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        while(rs.next()){
+            return new Compte(rs.getInt(1), rs.getDouble(2), rs.getInt(3), rs.getInt(4));
+        }
+        
+        return null;
+    }
+    
     //Methode pour recuperer tous les comptes de la BD
     public List<Compte> getAllCompte() throws SQLException{
         String command = "SELECt * FROM compte ORDER BY idCompte DESC;";

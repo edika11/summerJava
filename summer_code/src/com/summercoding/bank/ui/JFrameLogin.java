@@ -21,7 +21,7 @@ public class JFrameLogin extends javax.swing.JFrame {
     //controleur
     Controller controller = new Controller();
     
-    JFrameHome homePage = new JFrameHome();
+    //JFrameHome homePage = new JFrameHome();
     
     /**
      * Creates new form JFrameLoginAdmin
@@ -162,7 +162,8 @@ public class JFrameLogin extends javax.swing.JFrame {
                             }
                             else{
                                 this.setVisible(false);
-                                homePage.setVisible(true);
+                                //homePage.setVisible(true);
+                                new JFrameHome(status, null).setVisible(true);
                             }
                         }
                         else{ //Cas d'un utilisateur
@@ -173,7 +174,8 @@ public class JFrameLogin extends javax.swing.JFrame {
                             }
                             else{
                                 this.setVisible(false);
-                                homePage.setVisible(true);
+                                //homePage.setVisible(true);
+                                new JFrameHome(status, utilisateur).setVisible(true);
                             }
                         }
                     }  

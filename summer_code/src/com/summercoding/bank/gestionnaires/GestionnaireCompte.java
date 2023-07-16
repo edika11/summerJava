@@ -39,4 +39,9 @@ public class GestionnaireCompte {
     public Compte getCompteByIdCompte(int idCompte) throws SQLException{
         return compte.getOne(idCompte);
     }
+    
+    //Recuperer un copmte selon l'idUser
+    public Compte getCompteByIdUSer(int idUser) throws SQLException{
+        return compte.getCompteByIdUser(idUser);
+    }
 }

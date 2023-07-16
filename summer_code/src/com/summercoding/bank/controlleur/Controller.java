@@ -117,6 +117,12 @@ public class Controller {
         return gestionnaireCompte.getCompteByIdCompte(idCompte);
     }
     
+    //Retourner un compte selon l'idUser
+    public Compte routeVersGetCompteByIdUser(int idUser) throws SQLException{
+        return gestionnaireCompte.getCompteByIdUSer(idUser);
+    }
+    
+    
     //Fonction pour checker si le ;login est conforme à un email
     public boolean isEmailValid(String email){
         //Expression reguliere pour verifier si l'email est valide
