@@ -28,8 +28,6 @@ public class JFrameActionOnCompte extends javax.swing.JFrame {
     //HomePage à partir duquel on vient
     JFrameHome homePage;
     
-    //Personne voulant effectuer l'action
-    String personneEffectuantAction; //Admin ou user
     
     /**
      * Creates new form JFrameActionCompte
